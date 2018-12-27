@@ -1,3 +1,5 @@
 <template>
-  <div><h1>Not Authorized!</h1></div>
+  <div>
+    <h1>This page is behind a login</h1>
+  </div>
 </template>

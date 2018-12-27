@@ -30,7 +30,10 @@ export default new Vuex.Store({
       state.loggingIn = false;
     },
     logout(state) {
-      (state.status = ""), (state.token = "");
+      state.status = "";
+      state.token = "";
+      state.loginSuccessful = false;
+      state.loggingIn = false;
     }
   },
   getters: {
