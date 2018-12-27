@@ -62,11 +62,11 @@ export default new Vuex.Store({
       });
     },
     logout({ commit }) {
-      // eslint-disable-next-line
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         commit("logout");
         localStorage.removeItem("token");
         delete axios.defaults.headers.common["Authorization"];
+        resolve();
       });
     }
   }

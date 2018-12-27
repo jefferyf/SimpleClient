@@ -3,7 +3,7 @@
     <div v-if="loggingIn" class="container-loading">
       <img src="../assets/loading.gif" alt="Loading Icon" />
     </div>
-    <p v-if="loginError">{{ loginError }}</p>
+    <p class="error" v-if="loginError">{{ loginError }}</p>
     <form @submit.prevent="login">
       <input type="username" placeholder="Username" v-model="username" />
       <input type="password" placeholder="Password" v-model="password" />
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -23,12 +23,8 @@ export default {
     };
   },
   computed: {
-      ...mapState([
-        'loggingIn',
-        'loginError',
-        'loginSuccessful'
-      ])
-    },
+    ...mapState(["loggingIn", "loginError", "loginSuccessful"])
+  },
   methods: {
     login: function() {
       let username = this.username;
