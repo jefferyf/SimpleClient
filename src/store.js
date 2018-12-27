@@ -8,17 +8,26 @@ export default new Vuex.Store({
   state: {
     status: "",
     token: localStorage.getItem("token") || "",
-    user: {}
+    user: {},
+    loggingIn: false,
+    loginError: null,
+    loginSuccessful: false
   },
   mutations: {
     auth_request(state) {
       state.status = "loading";
+      state.loggingIn = true;
     },
     auth_success(state, token, user) {
-      (state.status = "success"), (state.token = token), (state.user = user);
+      state.status = "success";
+      state.loginSuccessful = true;
+      state.token = token;
+      state.user = user;
     },
-    auth_error(state) {
+    auth_error(state, err) {
       state.status = "error";
+      state.loginError = err.data;
+      state.loggingIn = false;
     },
     logout(state) {
       (state.status = ""), (state.token = "");
@@ -46,7 +55,7 @@ export default new Vuex.Store({
             resolve(resp);
           })
           .catch(err => {
-            commit("auth_error");
+            commit("auth_error", err.response);
             localStorage.removeItem("token");
             reject(err);
           });
