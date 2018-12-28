@@ -7,6 +7,22 @@ import Secure from "./components/Secure.vue";
 
 Vue.use(Router);
 
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isLoggedIn) {
+    next();
+    return;
+  }
+  next("/");
+};
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isLoggedIn) {
+    next();
+    return;
+  }
+  next("/login");
+};
+
 let router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -29,28 +45,15 @@ let router = new Router({
       path: "/secure",
       name: "secure",
       component: Secure,
-      meta: {
-        requiresAuth: true
-      }
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/login",
       name: "login",
-      component: Login
+      component: Login,
+      beforeEnter: ifNotAuthenticated
     }
   ]
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next();
-      return;
-    }
-    next("/login");
-  } else {
-    next();
-  }
 });
 
 export default router;
