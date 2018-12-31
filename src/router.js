@@ -4,6 +4,7 @@ import store from "./store.js";
 import Home from "./views/Home.vue";
 import Login from "./components/Login.vue";
 import Secure from "./components/Secure.vue";
+import Books from "./components/Books/Books.vue";
 
 Vue.use(Router);
 
@@ -52,6 +53,12 @@ let router = new Router({
       name: "login",
       component: Login,
       beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: "/books",
+      name: "books",
+      component: Books,
+      beforeEnter: ifAuthenticated
     }
   ]
 });

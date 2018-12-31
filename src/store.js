@@ -11,7 +11,8 @@ export default new Vuex.Store({
     user: {},
     loggingIn: false,
     loginError: null,
-    loginSuccessful: false
+    loginSuccessful: false,
+    books: []
   },
   mutations: {
     auth_request(state) {
@@ -34,11 +35,23 @@ export default new Vuex.Store({
       state.token = "";
       state.loginSuccessful = false;
       state.loggingIn = false;
+    },
+    fetch_books(state) {
+      state.searching = true;
+    },
+    fetch_books_success(state, books) {
+      state.searching = false;
+      state.books = books;
+    },
+    fetch_books_error(state, err) {
+      state.searching = false;
+      state.status = err.data;
     }
   },
   getters: {
     isLoggedIn: state => !!state.token,
-    authStatus: state => state.status
+    authStatus: state => state.status,
+    isSearching: state => state.searching
   },
   actions: {
     login({ commit }, user) {
@@ -70,6 +83,24 @@ export default new Vuex.Store({
         localStorage.removeItem("token");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
+      });
+    },
+    getBooks({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit("fetch_books");
+        axios({
+          url: "http://localhost:5000/api/books",
+          method: "GET"
+        })
+          .then(resp => {
+            const books = resp.data;
+            commit("fetch_books_success", books);
+            resolve(resp);
+          })
+          .catch(err => {
+            commit("fetch_books_error", err.response);
+            reject(err);
+          });
       });
     }
   }
