@@ -58,7 +58,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-          url: "http://localhost:5000/api/token",
+          url: "https://localhost:5001/api/token",
           data: user,
           method: "POST"
         })
@@ -88,12 +88,15 @@ export default new Vuex.Store({
     getBooks({ commit }) {
       return new Promise((resolve, reject) => {
         commit("fetch_books");
-        axios({
-          url: "http://localhost:5000/api/books",
-          method: "GET"
-        })
+        axios
+          .get("https://localhost:5001/api/books", {
+            params: {
+              page: 1,
+              per_page: 3
+            }
+          })
           .then(resp => {
-            const books = resp.data;
+            const books = resp.data.books;
             commit("fetch_books_success", books);
             resolve(resp);
           })

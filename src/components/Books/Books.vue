@@ -29,3 +29,10 @@ export default {
   computed: mapState(["books"])
 };
 </script>
+
+<style scoped>
+    .container {
+        width: 800px;
+        margin: 0 auto;
+    }
+</style>
