@@ -30,7 +30,7 @@ export default {
       let username = this.username;
       let password = this.password;
       this.$store
-        .dispatch("login", { username, password })
+        .dispatch("login/login", { username, password })
         .then(() => this.$router.push("/"))
         // eslint-disable-next-line
         .catch(err => console.log("error: ", err));

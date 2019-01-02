@@ -24,15 +24,15 @@ import { mapState } from "vuex";
 export default {
   name: "Books",
   mounted() {
-    this.$store.dispatch("getBooks");
+    this.$store.dispatch("books/getBooks");
   },
-  computed: mapState(["books"])
+  computed: mapState("books", ["books"])
 };
 </script>
 
 <style scoped>
-    .container {
-        width: 800px;
-        margin: 0 auto;
-    }
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
 </style>

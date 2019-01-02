@@ -21,7 +21,7 @@ export default {
       // eslint-disable-next-line
       return new Promise(function(resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch("logout");
+          this.$store.dispatch("login/logout");
         }
         throw err;
       });
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     logout: function() {
-      this.$store.dispatch("logout").then(() => {
+      this.$store.dispatch("login/logout").then(() => {
         this.$router.push("/login");
       });
     }

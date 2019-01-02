@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import store from "./store.js";
+import store from "./store";
 import Home from "./views/Home.vue";
 import Login from "./components/Login.vue";
 import Secure from "./components/Secure.vue";
@@ -9,7 +9,7 @@ import Books from "./components/Books/Books.vue";
 Vue.use(Router);
 
 const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isLoggedIn) {
+  if (store.getters["login/isLoggedIn"]) {
     next();
     return;
   }
@@ -17,7 +17,7 @@ const ifAuthenticated = (to, from, next) => {
 };
 
 const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters.isLoggedIn) {
+  if (!store.getters["login/isLoggedIn"]) {
     next();
     return;
   }
