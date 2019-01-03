@@ -1,17 +1,14 @@
 import axios from "axios";
 
-const getBooks = context => {
+const getBooks = (context, params) => {
   return new Promise((resolve, reject) => {
-    context.commit("fetch_books");
+    context.commit("fetch_books", params);
     axios
       .get("https://localhost:5001/api/books", {
-        params: {
-          page: 1,
-          per_page: 3
-        }
+        params: params
       })
       .then(resp => {
-        const books = resp.data.books;
+        const books = resp.data;
         context.commit("fetch_books_success", books);
         resolve(resp);
       })

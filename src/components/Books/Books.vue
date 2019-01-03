@@ -17,6 +17,15 @@
         </tr>
       </tbody>
     </table>
+
+    <b-pagination
+      size="md"
+      :total-rows="total"
+      v-model="currentPage"
+      :per-page="5"
+      @input="toPage"
+    >
+    </b-pagination>
   </div>
 </template>
 <script>
@@ -24,9 +33,29 @@ import { mapState } from "vuex";
 export default {
   name: "Books",
   mounted() {
-    this.$store.dispatch("books/getBooks");
+    this.$store.dispatch("books/getBooks", { page: 1, per_page: 5 });
   },
-  computed: mapState("books", ["books"])
+  computed: {
+    ...mapState({
+      books: state => state.books.books.books,
+      total: state => state.books.books.total,
+      page: state => state.books.searchParams.page
+    }),
+    currentPage: {
+      get: function() {
+        return this.page;
+      },
+      set: function(newValue) {
+        // eslint-disable-next-line
+        console.log('setting: ', newValue);
+      }
+    }
+  },
+  methods: {
+    toPage: function(ev) {
+      this.$store.dispatch("books/getBooks", { page: ev, per_page: 5 });
+    }
+  }
 };
 </script>
 

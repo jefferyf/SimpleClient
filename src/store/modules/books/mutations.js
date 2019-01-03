@@ -1,5 +1,6 @@
-const fetch_books = state => {
+const fetch_books = (state, params) => {
   state.searching = true;
+  state.searchParams = params;
 };
 
 const fetch_books_success = (state, books) => {
