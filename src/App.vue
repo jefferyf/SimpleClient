@@ -2,8 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link
-      ><span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
+      <router-link to="/about">About</router-link>      
+      <span v-if="isLoggedIn"> | <router-link to="/books">Books</router-link></span>
+      <span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
     </div>
     <router-view />
   </div>
@@ -13,7 +14,7 @@
 export default {
   computed: {
     isLoggedIn: function() {
-      return this.$store.getters.isLoggedIn;
+      return this.$store.getters["login/isLoggedIn"];
     }
   },
   created: function() {
